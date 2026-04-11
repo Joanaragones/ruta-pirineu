@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruta del Mar al Pirineu</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="estils.css">
+</head>
+<body>
+
+    <div id="header">
+        <h1>Del Mar al Pirineu</h1>
+        <p>Seguiment en directe</p>
+        <div id="stats">Km acumulats: <span id="km">0</span> km</div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // 1. Inicialitzar el mapa (Leaflet)
+        var map = L.map('map').setView([41.627, 2.691], 10);
+
+        // 2. Afegir la capa d'OpenStreetMap (El mapa clàssic)
+        // Substitueix la capa d'OpenStreetMap per aquesta de CartoDB (més neta i sense bloquejos)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors © CARTO',
+    subdomains: 'abcd',
+    maxZoom: 20
+}).addTo(map);
+
+        // 3. Icona amb la teva foto
+        var iconaJoan = L.icon({
+            iconUrl: 'joan.png',
+            iconSize: [60, 60],
+            iconAnchor: [30, 60],
+            popupAnchor: [0, -60],
+            className: 'marker-joan'
+        });
+
+        // 4. Carregar dades d'Strava des del JSON
+        fetch('dades_ruta.json')
+            .then(response => response.json())
+            .then(data => {
+                if (data.ruta && data.ruta.length > 0) {
+                    // Dibuixar la línia de la ruta
+                    var polyline = L.polyline(data.ruta, {
+                        color: '#e63946', // Vermell intens
+                        weight: 6,
+                        opacity: 0.9
+                    }).addTo(map);
+
+                    // Actualitzar els KM
+                    document.getElementById('km').innerText = data.distancia;
+
+                    // Posar la teva foto a l'últim punt
+                    var ultimaPos = data.ruta[data.ruta.length - 1];
+                    L.marker(ultimaPos, {icon: iconaJoan}).addTo(map)
+                        .bindPopup("<b>Estic aquí!</b>")
+                        .openPopup();
+
+                    // Zoom automàtic per veure tota la ruta
+                    map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
+                }
+            })
+            .catch(err => console.error("Error carregant el JSON:", err));
+    </script>
+</body>
+</html>
