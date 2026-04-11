@@ -1,65 +1,51 @@
-/* Configuració general */
-body, html { 
-    margin: 0; 
-    padding: 0; 
-    height: 100%; 
-    font-family: 'Helvetica Neue', Arial, sans-serif; 
-    background-color: #f4f4f4;
-}
-
-/* El contenidor del mapa ha d'ocupar tota la pantalla */
-#map { 
-    width: 100%; 
-    height: 100vh; 
-    z-index: 1;
-}
-
-/* El quadre de títol i estadístiques */
-#header {
-    position: absolute; 
-    top: 20px; 
-    left: 50%; 
-    transform: translateX(-50%);
-    z-index: 1000; 
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px; 
-    border-radius: 12px; 
-    text-align: center; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    min-width: 250px;
-    border-top: 5px solid #e63946;
-}
-
-h1 {
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
-    font-size: 1.5em;
+    padding: 0;
+    background-color: #f4f7f6;
+}
+
+#header {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: white;
+}
+
+#header h1 {
+    margin: 0;
+    font-size: 2.5em;
     color: #1d3557;
-    text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-p {
-    margin: 5px 0;
-    font-size: 0.9em;
-    color: #457b9d;
-}
-
-#stats { 
+#stats {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #e63946;
     margin-top: 10px;
-    font-weight: bold; 
-    color: #e63946; 
-    font-size: 1.3em; 
 }
 
-/* Estil per a la teva foto (el marcador) */
-.marker-joan {
-    border-radius: 50%;
-    border: 3px solid #fff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    object-fit: cover; /* Perquè la foto no es deformi */
+#map {
+    height: 500px;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border: 5px solid white;
 }
 
-/* Animació perquè el marcador "salti" una mica i cridi l'atenció */
-.leaflet-marker-icon {
-    transition: transform 0.3s ease-out;
+#etapes-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    text-align: center;
+}
+
+h2 {
+    color: #457b9d;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 10px;
 }
