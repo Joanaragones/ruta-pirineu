@@ -1,41 +1,61 @@
+import requests
 import json
 import polyline
-from stravalib.client import Client
 
-# Les teves claus d'Strava
+# --- CONFIGURACIÓ ---
 CLIENT_ID = '222248'
 CLIENT_SECRET = '479e199c52c8cc5d3f77241327480099b9f7016a'
 REFRESH_TOKEN = '8637d0f689e2a1265e4bb2326c7dcc98633a98ac'
+HASHTAG = "#delmaralpirineu"
 
-client = Client()
-
-# Refresquem el permís
-response = client.refresh_access_token(
-    client_id=CLIENT_ID,
-    client_secret=CLIENT_SECRET,
-    refresh_token=REFRESH_TOKEN
-)
-client.access_token = response['access_token']
-
-# Busquem rutes amb el hashtag
-activities = client.get_activities(limit=10)
-punts_totals = []
-dist_acumulada = 0
-
-for act in activities:
-    if "#DelMarAlPirineu" in act.name:
-        dist_acumulada += float(act.distance) / 1000
-        detall = client.get_activity(act.id)
-        if detall.map.summary_polyline:
-            punts_totals.extend(polyline.decode(detall.map.summary_polyline))
-
-# Guardem el resultat en un fitxer que l'index.html pugui llegir
-dades = {
-    "distancia": round(dist_acumulada, 2),
-    "ruta": punts_totals
+# 1. Obtenir nou token d'accés
+print("🔄 Connectant amb Strava...")
+auth_url = "https://www.strava.com/oauth/token"
+payload = {
+    'client_id': CLIENT_ID,
+    'client_secret': CLIENT_SECRET,
+    'refresh_token': REFRESH_TOKEN,
+    'grant_type': 'refresh_token',
+    'f': 'json'
 }
+res = requests.post(auth_url, data=payload, verify=False)
+access_token = res.json()['access_token']
 
-with open('dades_ruta.json', 'w') as f:
-    json.dump(dades, f)
+# 2. Demanar activitats
+header = {'Authorization': 'Bearer ' + access_token}
+# Demanem les últimes 20 activitats
+activities_url = "https://www.strava.com/api/v3/athlete/activities?per_page=20"
+activities = requests.get(activities_url, headers=header).json()
 
-print(f"✅ Fet! Has recorregut {dades['distancia']} km")
+print(f"🧐 He trobat {len(activities)} activitats totals al teu compte.")
+
+totes_les_rutes = []
+distancia_total = 0
+
+for activity in activities:
+    nom = activity['name']
+    descripcio = activity.get('description', '') or ''
+    
+    # Comprovem si el hashtag està al títol O a la descripció
+    if HASHTAG.lower() in nom.lower() or HASHTAG.lower() in descripcio.lower():
+        print(f"✅ Activitat trobada: {nom}")
+        
+        if activity['map']['summary_polyline']:
+            punts = polyline.decode(activity['map']['summary_polyline'])
+            totes_les_rutes.extend(punts)
+            distancia_total += activity['distance'] / 1000
+        else:
+            print(f"⚠️ L'activitat '{nom}' no té dades de mapa (GPS).")
+
+# 3. Guardar si hem trobat alguna cosa
+if totes_les_rutes:
+    dades = {
+        "distancia": round(distancia_total, 2),
+        "ruta": totes_les_rutes
+    }
+    with open('dades_ruta.json', 'w') as f:
+        json.dump(dades, f)
+    print(f"🥳 FET! Has recorregut {round(distancia_total, 2)} km en total.")
+else:
+    print(f"❌ No he trobat cap activitat amb el hashtag {HASHTAG}.")
+    print("Revisa que l'activitat sigui pública i tingui el hashtag al títol.")
