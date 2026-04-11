@@ -1,8 +1,9 @@
 name: Actualitzar Mapa Strava
+
 on:
   schedule:
-    - cron: '0 21 * * *' # S'executa cada dia a les 22h (hora espanyola aprox)
-  workflow_dispatch: # Permet executar-lo a mà des de GitHub
+    - cron: '0 21 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -31,5 +32,5 @@ jobs:
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
           git add dades_ruta.json
-          git commit -m "Actualització automàtica de la ruta" || echo "Sense canvis per actualitzar"
+          git commit -m "Actualització automàtica de la ruta" || echo "No hi ha canvis per pujar"
           git push
