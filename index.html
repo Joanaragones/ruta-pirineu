@@ -43,30 +43,37 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
 
         // 4. Carregar dades d'Strava des del JSON
         fetch('dades_ruta.json')
-            .then(response => response.json())
-            .then(data => {
-                if (data.ruta && data.ruta.length > 0) {
-                    // Dibuixar la línia de la ruta
-                    var polyline = L.polyline(data.ruta, {
-                        color: '#e63946', // Vermell intens
-                        weight: 6,
-                        opacity: 0.9
-                    }).addTo(map);
+    .then(response => response.json())
+    .then(data => {
+        console.log("Dades llegides del JSON:", data);
 
-                    // Actualitzar els KM
-                    document.getElementById('km').innerText = data.distancia;
+        // Aquesta línia busca 'ruta' o 'coordenades' automàticament
+        var punts = data.ruta || data.coordenades;
 
-                    // Posar la teva foto a l'últim punt
-                    var ultimaPos = data.ruta[data.ruta.length - 1];
-                    L.marker(ultimaPos, {icon: iconaJoan}).addTo(map)
-                        .bindPopup("<b>Estic aquí!</b>")
-                        .openPopup();
+        if (punts && punts.length > 0) {
+            // 1. Dibuixar la línia
+            var polyline = L.polyline(punts, {
+                color: '#e63946',
+                weight: 6,
+                opacity: 0.9
+            }).addTo(map);
 
-                    // Zoom automàtic per veure tota la ruta
-                    map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
-                }
-            })
-            .catch(err => console.error("Error carregant el JSON:", err));
+            // 2. Actualitzar els KM al text
+            document.getElementById('km').innerText = data.distancia;
+
+            // 3. Posar la teva foto al final
+            var ultimaPos = punts[punts.length - 1];
+            L.marker(ultimaPos, {icon: iconaJoan}).addTo(map)
+                .bindPopup("<b>Estic aquí!</b>")
+                .openPopup();
+
+            // 4. Centrar el mapa a la ruta
+            map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
+        } else {
+            console.error("No s'han trobat punts de ruta al JSON");
+        }
+    })
+    .catch(err => console.error("Error carregant el fitxer JSON:", err));
     </script>
 </body>
 </html>
