@@ -1,102 +1,78 @@
-body {
+/* ESTRUCTURA GENERAL */
+html, body {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: white;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden; /* Elimina l'scroll de tota la pàgina */
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7f6;
+    /* Ara sí que permetem l'scroll a tota la pàgina */
+    overflow-y: auto; 
 }
 
-/* EL HEADER: Ara és una caixa flotant */
+/* EL HEADER: Ara és un bloc normal a dalt de tot */
 #header {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1000; /* Perquè quedi per sobre del mapa */
-    background-color: rgba(255, 255, 255, 0.9); /* Blanc amb transparència */
-    padding: 15px 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    text-align: left; /* Queda millor a un costat */
-    pointer-events: auto; /* Permet interactuar amb la caixa si cal */
+    background-color: #ffffff;
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
 #header h1 {
     margin: 0;
-    font-size: 1.4em; /* Una mica més petit per ser una caixa flotant */
+    font-size: 2.2em;
     color: #1d3557;
     text-transform: uppercase;
-    line-height: 1.1;
 }
 
 #stats {
-    font-size: 1.1em;
+    font-size: 1.5em;
     font-weight: bold;
     color: #e63946;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
-/* EL MAPA: Ocupa el 100% real */
+/* EL MAPA: Ocupa una part fixa de la pantalla */
 #map {
-    height: 100vh;
-    width: 100vw;
-    z-index: 1;
+    height: 70vh; /* El 70% de l'alçada de la pantalla */
+    width: 100%;
+    border-bottom: 2px solid #ddd;
 }
 
-/* Amaguem l'etapes-container o el movem si vols que surti, 
-   però per ara el posem a zero perquè no faci scroll */
+/* LA TAULA: Un bloc independent a sota */
 #etapes-container {
-    position: absolute;
-    bottom: 20px; /* La posem a baix a l'esquerra perquè no molesti al títol */
-    left: 20px;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 15px;
+    max-width: 900px;
+    margin: 40px auto; /* Centrat i amb espai vertical */
+    padding: 20px;
+    background-color: white;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    max-width: 350px;
-    max-height: 40vh; /* Perquè no ocupi massa pantalla */
-    overflow-y: auto; /* Per si hi ha moltes etapes */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 #etapes-container h2 {
-    margin: 0 0 10px 0;
-    font-size: 1.1em;
     color: #1d3557;
-    text-transform: uppercase;
+    border-bottom: 2px solid #e63946;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-#etapes-container table {
+table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.85em;
 }
 
-#etapes-container th {
+th, td {
+    padding: 12px 15px;
     text-align: left;
-    padding: 5px;
-    border-bottom: 2px solid #1d3557;
-    color: #457b9d;
-}
-
-#etapes-container td {
-    padding: 8px 5px;
     border-bottom: 1px solid #eee;
 }
 
-/* Colors dels estats */
-.status {
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 0.8em;
+th {
+    background-color: #f8f9fa;
+    color: #457b9d;
+    text-transform: uppercase;
+    font-size: 0.9em;
 }
-.pendent {
-    background-color: #f1f1f1;
-    color: #888;
-}
-.fet {
-    background-color: #e9f5f2;
-    color: #2a9d8f;
+
+/* Estils de les files */
+tr:hover {
+    background-color: #fcfcfc;
 }
