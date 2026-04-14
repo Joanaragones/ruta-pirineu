@@ -3,41 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador - Del Mar al Pirineu</title>
-    <link rel="stylesheet" href="titol_estils.css">
+    <title>Títol - Seguiment</title>
 </head>
 <body>
 
-    <div id="header-card">
+    <div id="header">
         <h1>Del Mar al Pirineu</h1>
         <h5>Seguiment en directe</h5>
-        
-        <div class="stats-container">
-            <div class="stat-group">
-                <span id="km" class="value">0</span>
-                <span class="label">KILÒMETRES</span>
-            </div>
-            <div class="stat-group">
-                <span id="desnivell" class="value">0</span>
-                <span class="label">M+ POSITIUS</span>
-            </div>
+        <div id="stats">
+            <span id="km">0</span> <span>KM</span> 
+            <span id="desnivell">0</span> <small>M+</small>
         </div>
     </div>
 
     <script>
         async function carregarDades() {
             try {
-                // Ruta absoluta al teu JSON de GitHub
+                // URL directa al teu fitxer JSON a GitHub
                 const urlJSON = 'https://raw.githubusercontent.com/Joanaragones/ruta-pirineu/main/dades_ruta.json';
                 
-                // Timestamp per evitar la memòria cau (?t=...)
+                // Afegim un timestamp per evitar que el navegador guardi dades velles (cache)
                 const response = await fetch(urlJSON + '?t=' + new Date().getTime());
-                
-                if (!response.ok) throw new Error("Error en la càrrega");
-                
                 const data = await response.json();
                 
-                // Actualitzem els valors als spans corresponents
                 if (data.distancia !== undefined) {
                     document.getElementById('km').innerText = data.distancia;
                 }
@@ -45,14 +33,12 @@
                     document.getElementById('desnivell').innerText = data.desnivell_total;
                 }
             } catch (error) {
-                console.error("No s'han pogut carregar les dades:", error);
+                console.error("Error carregant les dades:", error);
             }
         }
 
-        // Càrrega inicial
+        // Carrega al principi i actualitza cada 30 segons
         carregarDades();
-        
-        // Refresc automàtic cada 30 segons
         setInterval(carregarDades, 30000);
     </script>
 
