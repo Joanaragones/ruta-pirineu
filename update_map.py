@@ -31,6 +31,7 @@ activities = requests.get(activities_url, headers=header).json()
 print(f"🧐 He trobat {len(activities)} activitats recents.")
 
 totes_les_rutes = []
+desnivell_total = 0 
 distancia_total = 0
 llista_etapes_completades = []
 
