@@ -43,7 +43,15 @@
                                 <td class="desnivell">${e.desnivell} m+</td>
                             </tr>`;
                     });
-
+                    html += `
+                        <tfoot style="background-color: #f8f9fa; font-weight: bold; border-top: 2px solid #ddd;">
+                            <tr>
+                                <td colspan="2" style="color: #1d3557; padding: 15px 12px;">TOTAL ACUMULAT</td>
+                                <td class="km" style="padding: 15px 12px;">${data.distancia} km</td>
+                                <td class="desnivell" style="padding: 15px 12px;">${data.desnivell_total} m+</td>
+                            </tr>
+                        </tfoot>`;
+                        
                     html += '</tbody></table>';
                     contenidor.innerHTML = html;
                 } else {
