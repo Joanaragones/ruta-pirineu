@@ -36,10 +36,12 @@ html, body {
 
 /* 3. EL MAPA (Sota el header, sense res que el tapi) */
 #map {
-    height: 450px; /* Alçada fixa perquè no ocupi tota la pantalla */
+    height: 450px;
     width: 100%;
     position: relative; 
     z-index: 1;
+    display: block; /* Això elimina l'espai fantasma de sota */
+    margin-bottom: 0;
 }
 
 /* 4. LA TAULA D'ETAPES (A sota del mapa) */
