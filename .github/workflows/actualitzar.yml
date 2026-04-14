@@ -27,11 +27,10 @@ jobs:
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
         run: python update_map.py
 
-      - name: Pujar canvis al JSON
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
-          git add dades_ruta.json
-          git pull --rebase origin main
-          git commit -m "Actualització automàtica de la ruta" || echo "No hi ha canvis per pujar"
-          git push
+- name: Commit and push if changed
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add dades_ruta.json
+        git commit -m "Actualització automàtica de dades Strava" || echo "Sense canvis per fer el commit"
+        git push origin main --force
