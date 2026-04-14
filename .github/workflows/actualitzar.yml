@@ -1,10 +1,9 @@
 name: Actualitzar Mapa de Strava
 
 on:
-  workflow_dispatch:
+   workflow_dispatch: # Permet executar-lo a mà des de GitHub
   schedule:
     - cron: '0 21 * * *' # S'executa cada dia a les 22h (hora espanyola aprox)
-  workflow_dispatch: # Permet executar-lo a mà des de GitHub
 
 jobs:
   build:
