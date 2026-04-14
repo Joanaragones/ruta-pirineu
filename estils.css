@@ -1,50 +1,45 @@
-/* ESTRUCTURA GENERAL */
+/* 1. RESET I BASES */
 html, body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f4f7f6;
-    /* Ara sí que permetem l'scroll a tota la pàgina */
-    overflow-y: auto; 
+    background-color: #f0f2f5;
 }
 
-/* EL HEADER: Ara és un bloc normal a dalt de tot */
+/* 2. EL BLOC FIX (Header + Mapa) */
+#fix-container {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
 #header {
-    background-color: #ffffff;
-    padding: 30px 20px;
+    padding: 15px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
 }
 
-#header h1 {
-    margin: 0;
-    font-size: 2.2em;
-    color: #1d3557;
-    text-transform: uppercase;
-}
+#header h1 { margin: 0; color: #1d3557; font-size: 1.6em; }
 
 #stats {
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: bold;
     color: #e63946;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
-/* EL MAPA: Ocupa una part fixa de la pantalla */
 #map {
-    height: 70vh; /* El 70% de l'alçada de la pantalla */
+    height: 65vh; /* El mapa ocupa el 65% de la pantalla */
     width: 100%;
-    border-bottom: 2px solid #ddd;
 }
 
-/* LA TAULA: Un bloc independent a sota */
+/* 3. EL BLOC DE LA TAULA (Amb scroll) */
 #etapes-container {
+    padding: 30px 15px;
     max-width: 900px;
-    margin: 40px auto; /* Centrat i amb espai vertical */
-    padding: 20px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin: 0 auto;
 }
 
 #etapes-container h2 {
@@ -57,22 +52,13 @@ html, body {
 table {
     width: 100%;
     border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-}
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+th { background-color: #f8f9fa; color: #457b9d; text-transform: uppercase; font-size: 0.8em; }
 
-th {
-    background-color: #f8f9fa;
-    color: #457b9d;
-    text-transform: uppercase;
-    font-size: 0.9em;
-}
-
-/* Estils de les files */
-tr:hover {
-    background-color: #fcfcfc;
-}
+/* Efecte per fer-ho més bonic al passar el ratolí */
+tr:hover { background-color: #f9f9f9; }

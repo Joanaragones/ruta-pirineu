@@ -4,111 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruta del Mar al Pirineu</title>
-    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="estils.css">
 </head>
 <body>
 
-<div id="header">
-    <h1>Del Mar al Pirineu</h1>
-    <p>Seguiment en directe</p>
-    <div id="stats">Km acumulats: <span id="km">0</span></div>
-</div>
-
-<div id="map"></div>
-
-<div id="etapes-container">
-    <h2>📋 Etapes Completades</h2>
-    <div id="llista-etapes">
-        <p>Esperant la primera etapa... 🥾</p>
+    <div id="fix-container">
+        <div id="header">
+            <h1>Del Mar al Pirineu</h1>
+            <div id="stats">Km totals: <span id="km">0</span></div>
+        </div>
+        <div id="map"></div>
     </div>
-</div>
+
+    <div id="etapes-container">
+        <h2>📋 Resum de les etapes</h2>
+        <div id="llista-etapes">
+            <p>Esperant la primera etapa... 🥾</p>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <script>
-        // 1. Inicialitzar el mapa (Leaflet)
-        var map = L.map('map').setView([41.627, 2.691], 10);
+        var map = L.map('map').setView([42.4248, 3.1605], 11);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
 
-        // 2. Afegir la capa d'OpenStreetMap (El mapa clàssic)
-        // Substitueix la capa d'OpenStreetMap per aquesta de CartoDB (més neta i sense bloquejos)
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors © CARTO',
-    subdomains: 'abcd',
-    maxZoom: 20
-}).addTo(map);
-
-        // 3. Icona amb la teva foto
         var iconaJoan = L.icon({
             iconUrl: 'joan.png',
             iconSize: [60, 60],
-            iconAnchor: [30, 60],
-            popupAnchor: [0, -60],
-            className: 'marker-joan'
+            iconAnchor: [30, 60]
         });
 
-    // 4. Carregar dades d'Strava des del JSON
         fetch('dades_ruta.json')
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
-                // 1. Actualitzem el número de KM al header
-                if (data.distancia !== undefined) {
-                    document.getElementById('km').innerText = data.distancia;
-                }
+                if (data.distancia) document.getElementById('km').innerText = data.distancia;
 
-                // 2. ACTUALITZACIÓ AUTOMÀTICA DE LA TAULA D'ETAPES
-                const contenidorEtapes = document.getElementById('llista-etapes');
-                
+                // Dibuixar Taula
+                const divEtapes = document.getElementById('llista-etapes');
                 if (data.etapes && data.etapes.length > 0) {
-                    let taulaHTML = `
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Activitat</th>
-                                    <th>Km</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-                    
-                    data.etapes.forEach(etapa => {
-                        taulaHTML += `
-                            <tr>
-                                <td>${etapa.data}</td>
-                                <td>${etapa.nom}</td>
-                                <td>${etapa.distancia} km</td>
-                            </tr>`;
+                    let html = '<table><thead><tr><th>Data</th><th>Etapa</th><th>Km</th></tr></thead><tbody>';
+                    data.etapes.forEach(e => {
+                        html += `<tr><td>${e.data}</td><td>${e.nom}</td><td>${e.distancia} km</td></tr>`;
                     });
-                    
-                    taulaHTML += `</tbody></table>`;
-                    contenidorEtapes.innerHTML = taulaHTML;
-                } else {
-                    contenidorEtapes.innerHTML = "<p>Esperant la primera etapa... 🥾</p>";
+                    html += '</tbody></table>';
+                    divEtapes.innerHTML = html;
                 }
 
-                // 3. Dibuixar la ruta al mapa (el teu codi actual)
-                var punts = data.ruta || data.coordenades;
-
-                if (punts && punts.length > 0) {
-                    var polyline = L.polyline(punts, {
-                        color: '#e63946',
-                        weight: 5,
-                        opacity: 0.8
-                    }).addTo(map);
-
-                    var ultimaPos = punts[punts.length - 1];
-                    L.marker(ultimaPos, {icon: iconaJoan}).addTo(map)
-                        .bindPopup("<b>Estic aquí!</b>")
-                        .openPopup();
-
-                    map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
-                } else {
-                    map.setView([42.4248, 3.1605], 12); 
+                // Dibuixar Ruta
+                if (data.ruta && data.ruta.length > 0) {
+                    var poly = L.polyline(data.ruta, {color: '#e63946', weight: 5}).addTo(map);
+                    L.marker(data.ruta[data.ruta.length - 1], {icon: iconaJoan}).addTo(map);
+                    map.fitBounds(poly.getBounds(), {padding: [50, 50]});
                 }
-            })
-            .catch(err => console.error("Error carregant les dades:", err));
-
+            });
     </script>
 </body>
 </html>
