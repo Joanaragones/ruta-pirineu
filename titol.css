@@ -1,4 +1,4 @@
-/* titol_estils.css */
+/* titol.css */
 
 body {
     margin: 0;
@@ -9,8 +9,8 @@ body {
     background-color: transparent;
 }
 
-#header-card {
-    background: white;
+#header {
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
     text-align: center;
@@ -22,48 +22,45 @@ body {
 
 h1 {
     margin: 0;
-    font-size: 1.5rem;
-    color: #04b1f6;
+    font-size: 1.6rem;
+    color: #04b1f6; /* Blau del títol */
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 h5 {
     margin: 5px 0 15px 0;
-    color: #888;
+    color: #666;
     font-weight: normal;
     text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 1px;
+    font-size: 0.8rem;
 }
 
-.stats-container {
+#stats {
     display: flex;
-    justify-content: space-around;
-    padding-top: 15px;
-    border-top: 1px solid #f0f0f0;
-}
-
-.stat-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.value {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #e63946;
-}
-
-.label {
-    font-size: 0.7rem;
-    color: #457b9d;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
     font-weight: bold;
-    margin-top: 2px;
 }
 
-/* Ajust per a pantalles molt petites */
-@media (max-width: 350px) {
-    .value { font-size: 1.5rem; }
-    h1 { font-size: 1.2rem; }
+#km {
+    font-size: 2.5rem;
+    color: #e63946; /* Vermell dels KM */
+}
+
+#km + span {
+    font-size: 1rem;
+    color: #457b9d; /* Blau fosc per a la unitat KM */
+    margin-right: 15px;
+}
+
+#desnivell {
+    font-size: 1.8rem;
+    color: #457b9d; /* Blau dels M+ */
+}
+
+small {
+    font-size: 0.8rem;
+    color: #457b9d;
 }

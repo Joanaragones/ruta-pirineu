@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Títol - Seguiment</title>
+    <link rel="stylesheet" href="titol.css">
 </head>
 <body>
 
@@ -19,11 +19,9 @@
     <script>
         async function carregarDades() {
             try {
-                // URL directa al teu fitxer JSON a GitHub
+                // URL del teu JSON a GitHub
                 const urlJSON = 'https://raw.githubusercontent.com/Joanaragones/ruta-pirineu/main/dades_ruta.json';
-                
-                // Afegim un timestamp per evitar que el navegador guardi dades velles (cache)
-                const response = await fetch(urlJSON + '?t=' + new Date().getTime());
+                const response = await fetch(urlJSON + '?t=' + Date.now());
                 const data = await response.json();
                 
                 if (data.distancia !== undefined) {
@@ -36,8 +34,6 @@
                 console.error("Error carregant les dades:", error);
             }
         }
-
-        // Carrega al principi i actualitza cada 30 segons
         carregarDades();
         setInterval(carregarDades, 30000);
     </script>
