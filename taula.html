@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taula d'Etapes</title>
+    <link rel="stylesheet" href="taula.css">
+</head>
+<body>
+
+    <div id="etapes-container">
+        <h2>📋 Full de Ruta: Del Mar al Pirineu</h2>
+        <div id="llista-etapes">
+            <p class="carregant">Carregant les etapes del projecte...</p>
+        </div>
+    </div>
+
+    <script>
+        fetch('dades_ruta.json')
+            .then(res => res.json())
+            .then(data => {
+                const contenidor = document.getElementById('llista-etapes');
+                
+                if (data.etapes && data.etapes.length > 0) {
+                    let html = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Etapa realitzada</th>
+                                    <th>Distància</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+                    data.etapes.forEach(e => {
+                        html += `
+                            <tr>
+                                <td class="data">${e.data}</td>
+                                <td class="nom">${e.nom}</td>
+                                <td class="km">${e.distancia} km</td>
+                            </tr>`;
+                    });
+
+                    html += '</tbody></table>';
+                    contenidor.innerHTML = html;
+                } else {
+                    contenidor.innerHTML = "<p class='no-dades'>Encara no has pujat cap etapa a Strava amb el hashtag.</p>";
+                }
+            })
+            .catch(err => {
+                document.getElementById('llista-etapes').innerHTML = "<p class='error'>Error en carregar el fitxer JSON.</p>";
+            });
+    </script>
+</body>
+</html>
