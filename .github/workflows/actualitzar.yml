@@ -1,4 +1,4 @@
-name: Actualitzar dades de Strava
+name: Actualitzar Mapa de Strava
 
 on:
   workflow_dispatch:
