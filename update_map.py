@@ -43,19 +43,24 @@ for activity in reversed(activities):
     if HASHTAG.lower() in nom.lower() or HASHTAG.lower() in descripcio.lower():
         print(f"✅ Etapa trobada: {nom}")
         
-        # 1. Sumem distància
+        # 1. Sumem distància i desnivell
         distancia_km = round(activity['distance'] / 1000, 2)
         distancia_total += distancia_km
         
-        # 2. Guardem la data (format: 14/04/2024)
+        # Agafem el desnivell (Strava el dóna en metres)
+        desnivell_etapa = int(activity.get('total_elevation_gain', 0))
+        desnivell_total += desnivell_etapa
+        
+        # 2. Guardem la data
         data_bruta = datetime.strptime(activity['start_date_local'], "%Y-%m-%dT%H:%M:%SZ")
         data_neta = data_bruta.strftime("%d/%m/%Y")
         
         # 3. Afegim a la llista d'etapes per la taula
         llista_etapes_completades.append({
             "data": data_neta,
-            "nom": nom.replace(HASHTAG, "").strip(), # Netegem el hashtag del nom
-            "distancia": distancia_km
+            "nom": nom.replace(HASHTAG, "").strip(),
+            "distancia": distancia_km,
+            "desnivell": desnivell_etapa  # <--- Nova dada!
         })
         
         # 4. Afegim la ruta al mapa
@@ -67,6 +72,7 @@ for activity in reversed(activities):
 # Fins i tot si la distància és 0, guardem el JSON perquè la web s'actualitzi
 dades = {
     "distancia": round(distancia_total, 2),
+    "desnivell_total": desnivell_total,  # Aquesta és la línia nova
     "ruta": totes_les_rutes,
     "etapes": llista_etapes_completades
 }
