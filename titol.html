@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="titol_estils.css">
+</head>
+<body>
+
+    <div id="header-card">
+        <h1>Del Mar al Pirineu</h1>
+        <h5>Seguiment en directe</h5>
+        
+        <div class="stats-container">
+            <div class="stat-group">
+                <span id="km" class="value">0</span>
+                <span class="label">KILÒMETRES</span>
+            </div>
+            <div class="stat-group">
+                <span id="desnivell" class="value">0</span>
+                <span class="label">M+ POSITIUS</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function carregarDades() {
+            try {
+                // El ?t= evita que el navegador guardi dades velles
+                const response = await fetch('dades_ruta.json?t=' + new Date().getTime());
+                const data = await response.json();
+                
+                if (data.distancia) {
+                    document.getElementById('km').innerText = data.distancia;
+                }
+                if (data.desnivell_total) {
+                    document.getElementById('desnivell').innerText = data.desnivell_total;
+                }
+            } catch (error) {
+                console.error("Error llegint dades:", error);
+            }
+        }
+
+        carregarDades();
+        setInterval(carregarDades, 30000); // Actualitza cada 30 segons
+    </script>
+
+</body>
+</html>

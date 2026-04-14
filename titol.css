@@ -1,0 +1,69 @@
+/* titol_estils.css */
+
+body {
+    margin: 0;
+    padding: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+}
+
+#header-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    width: 100%;
+    max-width: 400px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #04b1f6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h5 {
+    margin: 5px 0 15px 0;
+    color: #888;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.stat-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #e63946;
+}
+
+.label {
+    font-size: 0.7rem;
+    color: #457b9d;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+/* Ajust per a pantalles molt petites */
+@media (max-width: 350px) {
+    .value { font-size: 1.5rem; }
+    h1 { font-size: 1.2rem; }
+}
