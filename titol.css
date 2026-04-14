@@ -2,10 +2,11 @@
 
 body {
     margin: 0;
-    padding: 10px;
+    padding: 0px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
+    overflow: hidden; /* Força que no hi hagi scroll */
     background-color: transparent;
 }
 
