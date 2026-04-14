@@ -23,6 +23,7 @@ body {
     width: 95%;
     margin-top: 5px;
     max-width: 380px;
+    max-height: 140px; /* Ajusta l'alçada màxima */
 }
 
 h1 {
