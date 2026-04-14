@@ -9,12 +9,6 @@
 </head>
 <body>
 
-    <div id="header">
-        <h1>Del Mar al Pirineu</h1>
-        <h5>Seguiment en directe</h5>
-        <div id="stats"><span id="km">0</span> <span>KM</span></div>
-    </div>
-
 <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -36,11 +30,7 @@
         // Funció per carregar les dades
         fetch('dades_ruta.json')
             .then(res => res.json())
-            .then(data => {
-                // 1. Actualitzar el número del quadrat
-                if (data.distancia) {
-                    document.getElementById('km').innerText = data.distancia;
-                }
+            .then(data => 
 
                 // 2. Dibuixar la ruta i posar el marcador
                 if (data.ruta && data.ruta.length > 0) {
