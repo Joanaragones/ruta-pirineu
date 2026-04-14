@@ -47,5 +47,56 @@ body {
 /* Amaguem l'etapes-container o el movem si vols que surti, 
    però per ara el posem a zero perquè no faci scroll */
 #etapes-container {
-    display: none; 
+    position: absolute;
+    bottom: 20px; /* La posem a baix a l'esquerra perquè no molesti al títol */
+    left: 20px;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    max-width: 350px;
+    max-height: 40vh; /* Perquè no ocupi massa pantalla */
+    overflow-y: auto; /* Per si hi ha moltes etapes */
+}
+
+#etapes-container h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    color: #1d3557;
+    text-transform: uppercase;
+}
+
+#etapes-container table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85em;
+}
+
+#etapes-container th {
+    text-align: left;
+    padding: 5px;
+    border-bottom: 2px solid #1d3557;
+    color: #457b9d;
+}
+
+#etapes-container td {
+    padding: 8px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Colors dels estats */
+.status {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+.pendent {
+    background-color: #f1f1f1;
+    color: #888;
+}
+.fet {
+    background-color: #e9f5f2;
+    color: #2a9d8f;
 }

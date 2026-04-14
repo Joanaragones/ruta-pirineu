@@ -19,10 +19,31 @@
 <div id="map"></div>
 
 <div id="etapes-container">
-    <h2>Resum de les etapes</h2>
-    <div id="llista-etapes">
-        <p>Encara no hem començat la travessa! 🥾</p>
-    </div>
+    <h2>📋 Full de Ruta</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Etapa</th>
+                <th>Recorregut</th>
+                <th>Km</th>
+                <th>Estat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Mar d'Empúries - Olot</td>
+                <td>65</td>
+                <td><span class="status pendent">Pendent</span></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Olot - Ripoll</td>
+                <td>40</td>
+                <td><span class="status pendent">Pendent</span></td>
+            </tr>
+            </tbody>
+    </table>
 </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -48,41 +69,66 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
             className: 'marker-joan'
         });
 
-        // 4. Carregar dades d'Strava des del JSON
+    // 4. Carregar dades d'Strava des del JSON
         fetch('dades_ruta.json')
-    .then(response => response.json())
-    .then(data => {
-        // 1. Actualitzem el número de KM al header (fora del mapa)
-        if (data.distancia !== undefined) {
-            document.getElementById('km').innerText = data.distancia;
-        }
+            .then(response => response.json())
+            .then(data => {
+                // 1. Actualitzem el número de KM al header
+                if (data.distancia !== undefined) {
+                    document.getElementById('km').innerText = data.distancia;
+                }
 
-        // 2. Comprovem si hi ha punts de ruta
-        var punts = data.ruta || data.coordenades;
+                // 2. ACTUALITZACIÓ AUTOMÀTICA DE LA TAULA D'ETAPES
+                const contenidorEtapes = document.getElementById('llista-etapes');
+                
+                if (data.etapes && data.etapes.length > 0) {
+                    let taulaHTML = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Activitat</th>
+                                    <th>Km</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                    
+                    data.etapes.forEach(etapa => {
+                        taulaHTML += `
+                            <tr>
+                                <td>${etapa.data}</td>
+                                <td>${etapa.nom}</td>
+                                <td>${etapa.distancia} km</td>
+                            </tr>`;
+                    });
+                    
+                    taulaHTML += `</tbody></table>`;
+                    contenidorEtapes.innerHTML = taulaHTML;
+                } else {
+                    contenidorEtapes.innerHTML = "<p>Esperant la primera etapa... 🥾</p>";
+                }
 
-        if (punts && punts.length > 0) {
-            // Dibuixem la línia vermella
-            var polyline = L.polyline(punts, {
-                color: '#e63946',
-                weight: 5,
-                opacity: 0.8
-            }).addTo(map);
+                // 3. Dibuixar la ruta al mapa (el teu codi actual)
+                var punts = data.ruta || data.coordenades;
 
-            // Posem la teva foto al final de la ruta
-            var ultimaPos = punts[punts.length - 1];
-            L.marker(ultimaPos, {icon: iconaJoan}).addTo(map)
-                .bindPopup("<b>Estic aquí!</b>")
-                .openPopup();
+                if (punts && punts.length > 0) {
+                    var polyline = L.polyline(punts, {
+                        color: '#e63946',
+                        weight: 5,
+                        opacity: 0.8
+                    }).addTo(map);
 
-            // Centrem el mapa perquè es vegi tota la ruta feta
-            map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
-        } else {
-            // SI NO HI HA RUTA (KM 0): Centrem el mapa a l'inici (Portbou)
-            map.setView([42.4248, 3.1605], 12); 
-            console.log("Esperant la primera etapa...");
-        }
-    })
-    .catch(err => console.error("Error carregant les dades:", err));
+                    var ultimaPos = punts[punts.length - 1];
+                    L.marker(ultimaPos, {icon: iconaJoan}).addTo(map)
+                        .bindPopup("<b>Estic aquí!</b>")
+                        .openPopup();
+
+                    map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
+                } else {
+                    map.setView([42.4248, 3.1605], 12); 
+                }
+            })
+            .catch(err => console.error("Error carregant les dades:", err));
 
     </script>
 </body>
