@@ -18,7 +18,7 @@ jobs:
           python-version: '3.x'
 
       - name: Instal·lar dependències
-        run: pip install requests
+        run: pip install requests polyline
 
       - name: Executar script de Strava
         env:
