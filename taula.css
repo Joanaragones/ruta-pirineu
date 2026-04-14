@@ -1,8 +1,9 @@
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background-color: #fcfcfc;
+   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    /* Fem el fons totalment transparent o blanc pur */
+    background-color: transparent; 
     margin: 0;
-    padding: 20px;
+    padding: 10px; /* Reduïm una mica el padding lateral */
     color: #333;
 }
 
@@ -13,54 +14,58 @@ body {
 
 h2 {
     color: #1d3557;
-    border-bottom: 3px solid #e63946;
-    padding-bottom: 10px;
-    font-size: 1.5rem;
+    border-bottom: 2px solid #e63946;
+    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-top: 0; /* Treiem l'espai de dalt perquè no quedi massa separat del mapa */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     background: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    /* Eliminem l'ombra (box-shadow) per evitar l'efecte de "bloc" */
+    box-shadow: none; 
+    border: 1px solid #eee; /* Un filet molt fi per separar-la del fons */
     border-radius: 8px;
-    overflow: hidden; /* Perquè les cantonades siguin arrodonides */
-    margin-top: 20px;
+    overflow: hidden;
+    margin-top: 15px;
 }
 
 th {
-    background-color: #1d3557;
-    color: white;
+    background-color: #f8f9fa; /* Un gris molt suau en lloc de blau fosc */
+    color: #1d3557;
     text-align: left;
-    padding: 15px;
-    font-size: 0.9rem;
+    padding: 12px;
+    font-size: 0.85rem;
     text-transform: uppercase;
+    border-bottom: 2px solid #eee;
 }
 
 td {
-    padding: 15px;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 1rem;
+    padding: 12px;
+    border-bottom: 1px solid #f9f9f9;
+    font-size: 0.95rem;
 }
 
 tr:last-child td {
     border-bottom: none;
 }
 
+/* Efecte en passar el ratolí opcional */
 tr:hover {
-    background-color: #f8f9fa;
+    background-color: #fcfcfc;
 }
 
-.data { color: #666; font-size: 0.9rem; }
-.nom { font-weight: 600; color: #1d3557; }
+.data { color: #888; font-size: 0.85rem; }
+.nom { font-weight: 500; color: #1d3557; }
 .km { font-weight: bold; color: #e63946; text-align: right; }
 
 /* Missatges d'estat */
 .carregant, .no-dades, .error {
     text-align: center;
-    padding: 40px;
-    background: white;
-    border-radius: 8px;
-    color: #666;
+    padding: 30px;
+    background: transparent;
+    color: #999;
     font-style: italic;
 }
