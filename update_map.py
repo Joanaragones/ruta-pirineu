@@ -1,11 +1,12 @@
+import os
 import requests
 import json
 import polyline
 
 # --- CONFIGURACIÓ ---
-CLIENT_ID = '222248'
-CLIENT_SECRET = '479e199c52c8cc5d3f77241327480099b9f7016a'
-REFRESH_TOKEN = '8637d0f689e2a1265e4bb2326c7dcc98633a98ac'
+CLIENT_ID = os.environ.get('222248')
+CLIENT_SECRET = os.environ.get('479e199c52c8cc5d3f77241327480099b9f7016a')
+REFRESH_TOKEN = os.environ.get('8637d0f689e2a1265e4bb2326c7dcc98633a98ac')
 HASHTAG = "#delmaralpirineu"
 
 # 1. Obtenir nou token d'accés
