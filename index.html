@@ -30,7 +30,7 @@
         // Funció per carregar les dades
         fetch('dades_ruta.json')
             .then(res => res.json())
-            .then(data => 
+            .then(data => {
 
                 // 2. Dibuixar la ruta i posar el marcador
                 if (data.ruta && data.ruta.length > 0) {
