@@ -1,64 +1,53 @@
-/* 1. RESET I BASES */
+/* 1. RESET PER EVITAR L'SCROLL */
 html, body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prohibit l'scroll */
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f0f2f5;
 }
 
-/* 2. EL BLOC FIX (Header + Mapa) */
-#fix-container {
-    position: sticky;
+/* 2. MAPA A PANTALLA COMPLETA */
+#map {
+    position: absolute;
     top: 0;
-    z-index: 1000;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
 }
 
+/* 3. EL QUADRAT DE LA INFO (Flotant) */
 #header {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid #eee;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000; /* Per sobre del mapa */
+    background: rgba(255, 255, 255, 0.9); /* Blanc amb una mica de transparència */
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(0,0,0,0.1);
+    min-width: 200px;
 }
 
-#header h1 { margin: 0; color: #1d3557; font-size: 1.6em; }
+#header h1 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #1d3557;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
 #stats {
-    font-size: 1.3em;
+    margin-top: 5px;
+    font-size: 1.8em;
     font-weight: bold;
     color: #e63946;
-    margin-top: 5px;
 }
 
-#map {
-    height: 65vh; /* El mapa ocupa el 65% de la pantalla */
-    width: 100%;
+#stats span {
+    font-size: 0.6em;
+    color: #457b9d;
+    margin-left: 5px;
 }
-
-/* 3. EL BLOC DE LA TAULA (Amb scroll) */
-#etapes-container {
-    padding: 30px 15px;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-#etapes-container h2 {
-    color: #1d3557;
-    border-bottom: 2px solid #e63946;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
-th { background-color: #f8f9fa; color: #457b9d; text-transform: uppercase; font-size: 0.8em; }
-
-/* Efecte per fer-ho més bonic al passar el ratolí */
-tr:hover { background-color: #f9f9f9; }

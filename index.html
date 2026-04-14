@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruta del Mar al Pirineu</title>
+    <title>Mapa en Directe - Joan</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="estils.css">
 </head>
 <body>
 
-    <div id="fix-container">
-        <div id="header">
-            <h1>Del Mar al Pirineu</h1>
-            <div id="stats">Km totals: <span id="km">0</span></div>
-        </div>
-        <div id="map"></div>
+    <div id="header">
+        <h1>Del Mar al Pirineu</h1>
+        <div id="stats"><span id="km">0</span> <span>KM</span></div>
     </div>
 
-    <div id="etapes-container">
-        <h2>📋 Resum de les etapes</h2>
-        <div id="llista-etapes">
-            <p>Esperant la primera etapa... 🥾</p>
-        </div>
-    </div>
+    <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([42.4248, 3.1605], 11);
+        // Inicialització del mapa (Centrat a Portbou per defecte)
+        var map = L.map('map', { zoomControl: false }).setView([42.4248, 3.1605], 11);
+        
+        // Posem els controls del zoom a la dreta per no molestar al quadrat d'info
+        L.control.zoom({ position: 'topright' }).addTo(map);
+
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
 
         var iconaJoan = L.icon({
@@ -35,29 +32,31 @@
             iconAnchor: [30, 60]
         });
 
+        // Funció per carregar les dades
         fetch('dades_ruta.json')
             .then(res => res.json())
             .then(data => {
-                if (data.distancia) document.getElementById('km').innerText = data.distancia;
-
-                // Dibuixar Taula
-                const divEtapes = document.getElementById('llista-etapes');
-                if (data.etapes && data.etapes.length > 0) {
-                    let html = '<table><thead><tr><th>Data</th><th>Etapa</th><th>Km</th></tr></thead><tbody>';
-                    data.etapes.forEach(e => {
-                        html += `<tr><td>${e.data}</td><td>${e.nom}</td><td>${e.distancia} km</td></tr>`;
-                    });
-                    html += '</tbody></table>';
-                    divEtapes.innerHTML = html;
+                // 1. Actualitzar el número del quadrat
+                if (data.distancia) {
+                    document.getElementById('km').innerText = data.distancia;
                 }
 
-                // Dibuixar Ruta
+                // 2. Dibuixar la ruta i posar el marcador
                 if (data.ruta && data.ruta.length > 0) {
-                    var poly = L.polyline(data.ruta, {color: '#e63946', weight: 5}).addTo(map);
-                    L.marker(data.ruta[data.ruta.length - 1], {icon: iconaJoan}).addTo(map);
+                    var poly = L.polyline(data.ruta, {
+                        color: '#e63946', 
+                        weight: 6,
+                        opacity: 0.9
+                    }).addTo(map);
+                    
+                    var ultimaPos = data.ruta[data.ruta.length - 1];
+                    L.marker(ultimaPos, {icon: iconaJoan}).addTo(map);
+                    
+                    // Ajustar el mapa perquè es vegi tota la ruta feta
                     map.fitBounds(poly.getBounds(), {padding: [50, 50]});
                 }
-            });
+            })
+            .catch(err => console.log("Encara no hi ha dades:", err));
     </script>
 </body>
 </html>
