@@ -3,36 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa en Directe - Joan</title>
+    <title>Mapa Net Joan</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="estils.css">
+    <style>
+        /* CSS INTEGRAT: Forcem que el mapa ocupi tota la pantalla del bloc */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Fora scrolls interns */
+        }
+        #map {
+            width: 100%;
+            height: 100vh; /* 100% de l'alçada de la finestra */
+            background-color: #f0f0f0; /* Color gris per si triga a carregar */
+        }
+    </style>
 </head>
 <body>
 
-<div id="map"></div>
+    <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Inicialització del mapa (Centrat a Vic per defecte)
-        var map = L.map('map', { zoomControl: false }).setView([41.932769, 2.255467], 11);
-        
-        // Posem els controls del zoom a la dreta per no molestar al quadrat d'info
+        // 1. Inicialitzem el mapa
+        var map = L.map('map', { 
+            zoomControl: false 
+        }).setView([41.932769, 2.255467], 11);
+
+        // Posem el zoom a la dreta
         L.control.zoom({ position: 'topright' }).addTo(map);
 
+        // Capa de mapa (CartoDB Voyager)
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
 
+        // Icona personalitzada
         var iconaJoan = L.icon({
             iconUrl: 'joan.png',
             iconSize: [60, 60],
             iconAnchor: [30, 60]
         });
 
-        // Funció per carregar les dades
+        // 2. Anem a buscar les dades (Sense buscar cap element de text 'km')
         fetch('dades_ruta.json')
             .then(res => res.json())
             .then(data => {
-
-                // 2. Dibuixar la ruta i posar el marcador
+                // NOMÉS dibuixem la ruta si existeix
                 if (data.ruta && data.ruta.length > 0) {
                     var poly = L.polyline(data.ruta, {
                         color: '#e63946', 
@@ -40,14 +57,17 @@
                         opacity: 0.9
                     }).addTo(map);
                     
+                    // Posem el marcador a l'última posició
                     var ultimaPos = data.ruta[data.ruta.length - 1];
                     L.marker(ultimaPos, {icon: iconaJoan}).addTo(map);
                     
-                    // Ajustar el mapa perquè es vegi tota la ruta feta
+                    // Ajustem la vista perquè es vegi tot
                     map.fitBounds(poly.getBounds(), {padding: [50, 50]});
                 }
             })
-            .catch(err => console.log("Encara no hi ha dades:", err));
+            .catch(err => {
+                console.error("Error carregant el JSON:", err);
+            });
     </script>
 </body>
 </html>
