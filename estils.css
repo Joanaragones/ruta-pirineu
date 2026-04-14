@@ -51,3 +51,31 @@ html, body {
     color: #457b9d;
     margin-left: 5px;
 }
+
+/* AJUSTOS PER A MÒBILS */
+@media (max-width: 600px) {
+    #header {
+        top: 10px;
+        left: 10px;
+        right: 10px; /* Ocupa tota l'amplada de dalt */
+        min-width: 0;
+        padding: 8px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #header h1 {
+        font-size: 0.9em;
+    }
+
+    #stats {
+        font-size: 1.2em;
+        margin-top: 0;
+    }
+
+    /* Movem el zoom de Leaflet més avall perquè no el tapi el quadrat */
+    .leaflet-top.leaflet-right {
+        top: 70px !important;
+    }
+}
