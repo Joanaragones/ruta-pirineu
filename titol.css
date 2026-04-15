@@ -1,11 +1,16 @@
-/* titol.css - ADAPTACIÓ AUTOMÀTICA ORDINADOR/MÒBIL */
+/* titol.css */
 
-html, body {
+body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: transparent;
+    height: 100%;
+    width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    overflow: hidden; /* Força que no hi hagi scroll */
+    background-color: transparent;
+    align-items: flex-start;
 }
 
 #header {
@@ -14,38 +19,55 @@ html, body {
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-sizing: border-box; /* Molt important: el padding no suma amplada extra */
     border: 1px solid #eee;
-    box-sizing: border-box;
-    width: 98%;
-    margin: 5px auto;
-    max-width: 400px;
+    width: 95%;
+    margin-top: 5px;
+    max-width: 380px;
+    max-height: 140px; /* Ajusta l'alçada màxima */
 }
 
-/* --- MIDES PER A ORDINADOR (Pantalles grans) --- */
-h1 { font-size: 1.6rem; color: #04b1f6; text-transform: uppercase; margin: 0; }
-h5 { font-size: 0.8rem; color: #666; margin: 5px 0 10px 0; }
-#km { font-size: 2.5rem; color: #e63946; font-weight: bold; }
-#desnivell { font-size: 1.8rem; color: #457b9d; font-weight: bold; }
+h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #04b1f6; /* Blau del títol */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
-/* --- MIDES PER A MÒBIL (Pantalles de menys de 480px) --- */
-@media (max-width: 480px) {
-    #header {
-        padding: 8px; /* Reduïm espais interns */
-    }
-    h1 {
-        font-size: 1.2rem; /* Títol més petit perquè no boti */
-    }
-    h5 {
-        font-size: 0.65rem;
-        margin-bottom: 5px;
-    }
-    #km {
-        font-size: 1.8rem; /* Números més compactes */
-    }
-    #desnivell {
-        font-size: 1.4rem;
-    }
-    #stats {
-        gap: 5px;
-    }
+h5 {
+    margin: 2px 0 10px 0;
+    color: #666;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+#stats {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 8px;
+    font-weight: bold;
+}
+
+#km {
+    font-size: 2.2rem;
+    color: #e63946; /* Vermell dels KM */
+}
+
+#km + span {
+    font-size: 0.9rem;
+    color: #457b9d; /* Blau fosc per a la unitat KM */
+    margin-right: 10px;
+}
+
+#desnivell {
+    font-size: 1.6rem;
+    color: #457b9d; /* Blau dels M+ */
+}
+
+small {
+    font-size: 0.7rem;
+    color: #457b9d;
 }
