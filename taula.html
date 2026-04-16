@@ -41,8 +41,8 @@
                                 <td class="Etapa">${i + 1}</td)
                                 <td class="data">${e.data || ''}</td>
                                 <td class="Traçat">${e.etapa || ''}</td>
-                                <td class="km">${e.distancia} km</td>
-                                <td class="desnivell">${e.desnivell} m+</td>
+                                <td class="km">${e.distancia || '0'} km</td>
+                                <td class="desnivell">${e.desnivell || '0'} m+</td>
                             </tr>`;
                     });
                     html += `
