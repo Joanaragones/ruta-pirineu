@@ -26,9 +26,8 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Etapa</th>
                                     <th>Data</th>
-                                    <th>Traçat</th>
+                                    <th>Etapa</th>
                                     <th>Distància</th>
                                     <th>Desnivell</th>
                                 </tr>
@@ -38,17 +37,16 @@
                     data.etapes.forEach(e => {
                         html += `
                             <tr>
-                                <td class="Etapa">${i + 1}</td)
-                                <td class="data">${e.data || ''}</td>
-                                <td class="Traçat">${e.etapa || ''}</td>
-                                <td class="km">${e.distancia || '0'} km</td>
-                                <td class="desnivell">${e.desnivell || '0'} m+</td>
+                                <td class="data">${e.data}</td>
+                                <td class="Etapa">${e.etapa}</td>
+                                <td class="km">${e.distancia} km</td>
+                                <td class="desnivell">${e.desnivell} m+</td>
                             </tr>`;
                     });
                     html += `
                         <tfoot style="background-color: #f8f9fa; font-weight: bold; border-top: 2px solid #ddd;">
                             <tr>
-                                <td colspan="3" style="color: #1d3557; padding: 15px 12px;">TOTAL ACUMULAT</td>
+                                <td colspan="2" style="color: #1d3557; padding: 15px 12px;">TOTAL ACUMULAT</td>
                                 <td class="km" style="padding: 15px 12px;">${data.distancia} km</td>
                                 <td class="desnivell" style="padding: 15px 12px;">${data.desnivell_total} m+</td>
                             </tr>
