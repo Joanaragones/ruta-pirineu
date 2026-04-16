@@ -48,6 +48,13 @@ td {
     font-size: 0.95rem;
 }
 
+.Traçat {
+    text-align: center;
+    font-weight: bold;
+    width: 45px; /* Mida justa per al número */
+    color: #666;
+}
+
 tr:last-child td {
     border-bottom: none;
 }

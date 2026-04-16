@@ -9,7 +9,7 @@
 <body>
 
     <div id="etapes-container">
-        <h2>Full de Ruta: Del Mar al Pirineu</h2>
+        <h2>📋 Full de Ruta: Del Mar al Pirineu</h2>
         <div id="llista-etapes">
             <p class="carregant">Carregant les etapes del projecte...</p>
         </div>
@@ -26,8 +26,9 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Data</th>
                                     <th>Etapa</th>
+                                    <th>Data</th>
+                                    <th>Traçat</th>
                                     <th>Distància</th>
                                     <th>Desnivell</th>
                                 </tr>
@@ -37,8 +38,9 @@
                     data.etapes.forEach(e => {
                         html += `
                             <tr>
+                                <td class="Etapa">${e.etapa}</td)
                                 <td class="data">${e.data}</td>
-                                <td class="nom">${e.nom}</td>
+                                <td class="Traçat">${e.traçat}</td>
                                 <td class="km">${e.distancia} km</td>
                                 <td class="desnivell">${e.desnivell} m+</td>
                             </tr>`;
