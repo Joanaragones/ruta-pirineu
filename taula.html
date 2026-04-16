@@ -38,9 +38,9 @@
                     data.etapes.forEach(e => {
                         html += `
                             <tr>
-                                <td class="Etapa">${e.traçat}</td)
-                                <td class="data">${e.data}</td>
-                                <td class="Traçat">${e.etapa}</td>
+                                <td class="Etapa">${e.traçat || ''}</td)
+                                <td class="data">${e.data || ''}</td>
+                                <td class="Traçat">${e.etapa || ''}</td>
                                 <td class="km">${e.distancia} km</td>
                                 <td class="desnivell">${e.desnivell} m+</td>
                             </tr>`;
