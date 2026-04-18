@@ -2,7 +2,7 @@
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=v=400">
+    <meta name="viewport" content="width=device-width, initial-scale=v=100">
     <link rel="stylesheet" href="titol.css?v=1.1">
 </head>
 <body>
@@ -29,6 +29,32 @@
                 }
                 if (data.desnivell_total !== undefined) {
                     document.getElementById('desnivell').innerText = data.desnivell_total;
+                }
+                if (data.ruta && data.ruta.length > 0) {
+                    const ultimaPos = data.ruta[data.ruta.length - 1];
+
+                    // 1. Si el mapa no existeix, el creem centrat on ets tu
+                    if (!mapaInstancia) {
+                        mapaInstancia = L.map('mapa').setView(ultimaPos, 12);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapaInstancia);
+                    }
+
+                    // 2. Definim el teu ninot personalitzat i GRAN
+                    const iconaJo = L.icon({
+                        iconUrl: 'joan.png', // <--- AQUÍ HI HA EL TEU FITXER!
+                        iconSize: [60, 60],  // Mida del ninot
+                        iconAnchor: [30, 60] // Base del ninot
+                    });
+
+                    // 3. Actualitzem la línia i el marcador (esborrem els vells i posem els nous)
+                    if (rutaLayer) mapaInstancia.removeLayer(rutaLayer);
+                    if (marcadorNinot) mapaInstancia.removeLayer(marcadorNinot);
+
+                    rutaLayer = L.polyline(data.ruta, {color: '#e63946', weight: 5}).addTo(mapaInstancia);
+                    marcadorNinot = L.marker(ultimaPos, {icon: iconaJo}).addTo(mapaInstancia);
+
+                    // 4. Centrem el mapa automaticàment al ninot
+                    mapaInstancia.panTo(ultimaPos);
                 }
             } catch (error) {
                 console.error("Error carregant les dades:", error);
