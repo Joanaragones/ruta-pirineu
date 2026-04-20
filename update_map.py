@@ -8,7 +8,7 @@ from datetime import datetime
 CLIENT_ID = os.environ.get('STRAVA_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('STRAVA_CLIENT_SECRET')
 REFRESH_TOKEN = os.environ.get('STRAVA_REFRESH_TOKEN')
-HASHTAG = "#delmaralpirineu"
+HASHTAG = "#costabrava"
 
 # 1. Obtenir nou token d'accés
 print("🔄 Connectant amb Strava...")
