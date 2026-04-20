@@ -41,9 +41,10 @@
 
                     // 2. Definim el teu ninot personalitzat i GRAN
                     const iconaJo = L.icon({
-                        iconUrl: 'https://github.com/Joanaragones/ruta-pirineu/raw/main/joan.png', // <--- AQUÍ HI HA EL TEU FITXER!
+                        iconUrl: 'https://github.com/Joanaragones/ruta-pirineu/raw/main/icona.png', // <--- AQUÍ HI HA EL TEU FITXER!
                         iconSize: [60, 60],  // Mida del ninot
-                        iconAnchor: [30, 60] // Base del ninot
+                        iconAnchor: [30, 60], // Base del ninot
+                        popupAnchor: [0, -60]
                     });
 
                     // 3. Actualitzem la línia i el marcador (esborrem els vells i posem els nous)
@@ -51,7 +52,9 @@
                     if (marcadorNinot) mapaInstancia.removeLayer(marcadorNinot);
 
                     rutaLayer = L.polyline(data.ruta, {color: '#e63946', weight: 5}).addTo(mapaInstancia);
-                    marcadorNinot = L.marker(ultimaPos, {icon: iconaJo}).addTo(mapaInstancia);
+                    marcadorNinot = L.marker(ultimaPos, {icon: iconaJo}).addTo(mapaInstancia)
+                        .bindPopup("<b>Sóc aquí!</b>")
+                        .openPopup();
 
                     // 4. Centrem el mapa automaticàment al ninot
                     mapaInstancia.panTo(ultimaPos);
